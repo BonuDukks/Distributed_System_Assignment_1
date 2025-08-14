@@ -24,6 +24,19 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Cal
             min = poppedValue;
           }
         }
+        serverStack.push(min);
+
+      case "max":
+        int max = serverStack.peek();
+        while (!serverStack.empty()) {
+          int poppedValue = serverStack.pop();
+          if (poppedValue > max) {
+            max = poppedValue;
+          }
+        }
+        serverStack.push(max);
+
+      case "lcm":
 
     }
   }
