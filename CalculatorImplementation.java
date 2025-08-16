@@ -6,6 +6,20 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Cal
 
   private Stack<Integer> serverStack = new Stack<>();
 
+  private static int getGCD(int a, int b) {
+    int biggerNumb = Math.max(a, b);
+    int smallerNumb = Math.min(a, b);
+
+    while (smallerNumb != 0) {
+      int tempNumb = smallerNumb;
+      smallerNumb = biggerNumb % smallerNumb;
+      biggerNumb = tempNumb;
+    }
+
+    return biggerNumb;
+
+  }
+
   public CalculatorImplementation() throws RemoteException {
     super();
   }
@@ -38,6 +52,21 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Cal
 
       case "lcm":
 
+      case "gcd":
+        if (serverStack.size() == 1) {
+          break;
+        }
+
+        int firstValue = serverStack.pop();
+        int secondValue = serverStack.pop();
+
+        int result = getGCD(firstValue, secondValue);
+
+        while (!serverStack.empty()) {
+          result = getGCD(serverStack.pop(), result);
+        }
+
+        serverStack.push(result);
     }
   }
 
