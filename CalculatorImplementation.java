@@ -20,6 +20,13 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Cal
 
   }
 
+  private static int getLCM(int a, int b) {
+    int product = Math.abs(a * b);
+    int gcd = getGCD(a, b);
+    int lcm = product / gcd;
+    return lcm;
+  }
+
   public CalculatorImplementation() throws RemoteException {
     super();
   }
@@ -51,6 +58,20 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Cal
         serverStack.push(max);
 
       case "lcm":
+        if (serverStack.size() == 1) {
+          break;
+        }
+
+        int firstNumb = serverStack.pop();
+        int secondNumb = serverStack.pop();
+
+        int lcmResult = getLCM(firstNumb, secondNumb);
+
+        while (!serverStack.empty()) {
+          lcmResult = getLCM(serverStack.pop(), lcmResult);
+        }
+
+        serverStack.push(lcmResult);
 
       case "gcd":
         if (serverStack.size() == 1) {
@@ -87,6 +108,10 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Cal
     }
     return pop();
 
+  }
+
+  public Stack<Integer> getStack() throws RemoteException {
+    return serverStack;
   }
 
 }
