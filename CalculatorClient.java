@@ -11,8 +11,12 @@ public class CalculatorClient {
       // Look up the remote object from the RMI registry
       Calculator calculator = (Calculator) Naming.lookup("rmi://localhost:1099/Calculator");
 
+      // Boolean used for while loop to constantly prompt the user.
       boolean exit = false;
 
+      // Prompts the users with a menu to select the calculator operator they want to
+      // use. Handle the input using a switch case, which will prompt them again (if
+      // applicable) and call the method on the remote object.
       while (!exit) {
         Scanner scannerObj = new Scanner(System.in);
         System.out.println("""
