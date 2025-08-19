@@ -74,6 +74,8 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Cal
         serverStack.push(max);
 
       case "lcm":
+
+        // If only 1 value on stack, breaks so no error occurs.
         if (serverStack.size() == 1) {
           break;
         }
@@ -90,6 +92,8 @@ public class CalculatorImplementation extends UnicastRemoteObject implements Cal
         serverStack.push(lcmResult);
 
       case "gcd":
+
+        // If only 1 value on stack, breaks so no error occurs.
         if (serverStack.size() == 1) {
           break;
         }

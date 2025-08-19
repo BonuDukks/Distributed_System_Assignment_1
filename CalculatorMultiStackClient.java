@@ -5,11 +5,16 @@ import java.net.MalformedURLException;
 import java.util.Stack;
 import java.util.Scanner;
 
-public class CalculatorClient {
+public class CalculatorMultiStackClient {
   public static void main(String[] args) {
     try {
       // Look up the remote object from the RMI registry
-      Calculator calculator = (Calculator) Naming.lookup("rmi://localhost:1099/Calculator");
+      CalculatorMultiStack calculatorMultiStack = (CalculatorMultiStack) Naming
+          .lookup("rmi://localhost:1099/CalculatorMultiStack");
+
+      // Server intialises a stack exclusive to the client and returns a user ID to be
+      // passed into other functions.
+      int userId = calculatorMultiStack.intialiseClient();
 
       // Boolean used for while loop to constantly prompt the user.
       boolean exit = false;
@@ -39,42 +44,42 @@ public class CalculatorClient {
           case 1:
             System.out.println("\nInput an Integer to be pushed to the stack:");
             int pushedValue = scannerObj.nextInt();
-            calculator.pushValue(pushedValue);
-            System.out.println("Current stack is: " + calculator.getStack());
+            calculatorMultiStack.pushValue(pushedValue, userId);
+            System.out.println("Current stack is: " + calculatorMultiStack.getStack(userId));
             break;
           case 2:
-            int poppedValue = calculator.pop();
+            int poppedValue = calculatorMultiStack.pop(userId);
             System.out.println("\nInteger popped from the stack was: " + poppedValue);
-            System.out.println("Current stack is: " + calculator.getStack());
+            System.out.println("Current stack is: " + calculatorMultiStack.getStack(userId));
             break;
           case 3:
-            if (calculator.isEmpty()) {
+            if (calculatorMultiStack.isEmpty(userId)) {
               System.out.println("\nStack is empty.");
             } else {
               System.out.println("\nStack is not empty.");
             }
             break;
           case 4:
-            calculator.pushOperation("min");
-            System.out.println("\nCurrent stack after min operation is: " + calculator.getStack());
+            calculatorMultiStack.pushOperation("min", userId);
+            System.out.println("\nCurrent stack after min operation is: " + calculatorMultiStack.getStack(userId));
             break;
           case 5:
-            calculator.pushOperation("max");
-            System.out.println("\nCurrent stack after max operation is: " + calculator.getStack());
+            calculatorMultiStack.pushOperation("max", userId);
+            System.out.println("\nCurrent stack after max operation is: " + calculatorMultiStack.getStack(userId));
             break;
           case 6:
-            calculator.pushOperation("lcm");
-            System.out.println("\nCurrent stack after lcm operation is: " + calculator.getStack());
+            calculatorMultiStack.pushOperation("lcm", userId);
+            System.out.println("\nCurrent stack after lcm operation is: " + calculatorMultiStack.getStack(userId));
             break;
           case 7:
-            calculator.pushOperation("gcd");
-            System.out.println("\nCurrent stack after gcd operation is: " + calculator.getStack());
+            calculatorMultiStack.pushOperation("gcd", userId);
+            System.out.println("\nCurrent stack after gcd operation is: " + calculatorMultiStack.getStack(userId));
             break;
           case 8:
             System.out.println("\nEnter delay value (in milliseconds): ");
             int delayValue = scannerObj.nextInt();
-            calculator.delayPop(delayValue);
-            System.out.println("Current stack is: " + calculator.getStack());
+            calculatorMultiStack.delayPop(delayValue, userId);
+            System.out.println("Current stack is: " + calculatorMultiStack.getStack(userId));
             break;
 
           case 9:

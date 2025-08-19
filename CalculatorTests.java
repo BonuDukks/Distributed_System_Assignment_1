@@ -10,7 +10,7 @@ public class CalculatorTests {
   @Test
   public void testPushSingleClient() {
     try {
-      // Look up the remote object from the RMI registry
+
       Calculator calculator = (Calculator) Naming.lookup("rmi://localhost:1099/Calculator");
 
       calculator.pushValue(10);
@@ -36,7 +36,6 @@ public class CalculatorTests {
 
   @Test
   public void testPushMultipleClients() throws Exception {
-    // Create two "client" threads
     Thread client1 = new Thread(() -> {
       try {
         Calculator calculator = (Calculator) Naming.lookup("rmi://localhost:1099/Calculator");
@@ -87,7 +86,6 @@ public class CalculatorTests {
   @Test
   public void testPopSingleClient() {
     try {
-      // Look up the remote object from the RMI registry
       Calculator calculator = (Calculator) Naming.lookup("rmi://localhost:1099/Calculator");
 
       calculator.pushValue(10);
@@ -116,7 +114,6 @@ public class CalculatorTests {
 
   @Test
   public void testPopMultipleClients() throws Exception {
-    // Create two "client" threads
     Thread client1 = new Thread(() -> {
       try {
         Calculator calculator = (Calculator) Naming.lookup("rmi://localhost:1099/Calculator");
@@ -168,10 +165,6 @@ public class CalculatorTests {
   public void testPushOperatorSingleClient() {
     try {
 
-      // Stack<Integer> expected = new Stack<>();
-      // expected.push(10);
-
-      // Look up the remote object from the RMI registry
       Calculator calculator = (Calculator) Naming.lookup("rmi://localhost:1099/Calculator");
 
       calculator.pushValue(1000);
@@ -225,7 +218,6 @@ public class CalculatorTests {
 
   @Test
   public void testGCDMultipleClients() throws Exception {
-    // Create two "client" threads
     Thread client1 = new Thread(() -> {
       try {
         Calculator calculator = (Calculator) Naming.lookup("rmi://localhost:1099/Calculator");
@@ -275,7 +267,6 @@ public class CalculatorTests {
 
   @Test
   public void testPopDelayMultipleClient() throws Exception {
-    // Create two "client" threads
     Thread client1 = new Thread(() -> {
       try {
         Calculator calculator = (Calculator) Naming.lookup("rmi://localhost:1099/Calculator");
